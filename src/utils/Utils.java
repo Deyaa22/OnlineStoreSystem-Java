@@ -33,4 +33,26 @@ public class Utils {
 
         return yesForThisOperation;
     }
+
+    public static String putTextInBox(String text) {
+        int textLength = text.trim().length();
+        text = text.trim()+ Constants.SPACE_BOX_15;
+        String tempText = "";
+        for (int i = 0; i < textLength && i < Constants.SPACE_BOX_15.length(); i++) {
+            tempText += text.charAt(i);
+        }
+        String tempText2 = tempText;
+        for (int i = tempText.length(); i < Constants.SPACE_BOX_15.length(); i++) {
+            tempText2 += " ";
+        }
+        text = tempText2;
+        return text;
+    }
+    public static String putSequanceOfTextsInBoxes(String[] texts){
+        String tempText = "|";
+        for (int i = 0; i < texts.length; i++) {
+            tempText = tempText.concat(putTextInBox(texts[i])).concat("| ");
+        }
+        return tempText;
+    }
 }

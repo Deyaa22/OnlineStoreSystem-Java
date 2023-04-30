@@ -13,21 +13,17 @@ public class OnlineStoreSystem_Deyaa_120210327 {
 
     public static void main(String[] args) {
         System.out.println(Constants.TABS_SPACE(2) + "* Deyaa Stor *\n");
-        //StartStore();
         mainMenu();
     }
-//    public static void StartStore(){
-//        //Store.
-//    }
 
     public static void mainMenu() {
         System.out.println(Constants.TAB_SPACE + "\n####################\nMain Menue\n####################");
         int operationNumber = 0;
         do {
-            System.out.println(Constants.OperationsText);
+            System.out.println(Constants.OPERATIONS_TEXT);
             System.out.print("Operation number: ");
             operationNumber = input.nextInt();
-        } while (operationNumber <= 0 || operationNumber > Constants.operationsCount);
+        } while (operationNumber <= 0 || operationNumber > Constants.OPERATIONS_COUNT);
         startOperation(operationNumber);
     }
 
@@ -46,6 +42,7 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 removeAnItemFromCustomerShoppingCart();
                 break;
             case 5:
+                viewTheItemsInCustomerShoppingCart();
                 break;
             case 6:
                 break;
@@ -229,7 +226,6 @@ public class OnlineStoreSystem_Deyaa_120210327 {
     }
 
     public static void removeAnItemFromCustomerShoppingCart() {
-        boolean stopOperation = false;
 
         System.out.println("Remove Item from Customer's Shopping Cart Operation:");
         Customer currentCustomer = null;
@@ -244,15 +240,12 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 if (yesForThisOperation) {
                     continueCustomerChecking = true;
                 } else {
-                    stopOperation = true;
+                    mainMenu();
+                    return;
                 }
             }
         } while (continueCustomerChecking == true);
 
-        if (stopOperation) {
-            mainMenu();
-            return;
-        }
         currentCustomer = Store.getCustomer(tempCustomerNumber);
         System.out.println("The customer no: " + tempCustomerNumber + ", " + "The customer name: " + currentCustomer.getName());
         // View Items Available
@@ -297,5 +290,49 @@ public class OnlineStoreSystem_Deyaa_120210327 {
         } while (!currentCustomer.noItemsInStore());
 
         mainMenu();
+    }
+
+    public static void viewTheItemsInCustomerShoppingCart() {
+        System.out.println("View items in Customer's Shopping Cart Operation:");
+        Customer currentCustomer = null;
+        boolean continueCustomerChecking = false;
+        int tempCustomerNumber;
+        do {
+            System.out.print("Please enter the Customer number: ");
+            tempCustomerNumber = input.nextInt();
+
+            if (!Store.customerIsExist(tempCustomerNumber)) {
+                boolean yesForThisOperation = Utils.askYesOrNoQuestion("The Customer is not exist, Do you want try again", input);
+                if (yesForThisOperation) {
+                    continueCustomerChecking = true;
+                } else {
+                    mainMenu();
+                    return;
+                }
+            }
+        } while (continueCustomerChecking == true);
+
+        currentCustomer = Store.getCustomer(tempCustomerNumber);
+        String itemNumberText = String.valueOf(currentCustomer.getItem(1).getNumber());
+        String itemNameText = currentCustomer.getItem(1).getName();
+        String itemQuantityText = String.valueOf(currentCustomer.getItem(1).getQuantity());
+        String itemPriceText = String.valueOf(currentCustomer.getItem(1).getPrice());
+        float totalItemQuantityPrice = currentCustomer.getItem(1).getPrice() * currentCustomer.getItem(1).getQuantity();
+        String totalItemQuantityPriceText = String.valueOf(totalItemQuantityPrice);
+        
+        String[] customerDetailsTopics = {"Item No.", "Item name", "Quantity", "Unit price", "Total price"};
+        System.out.println(Utils.putSequanceOfTextsInBoxes(customerDetailsTopics));
+        
+        String[] customerDetails = {itemNumberText, itemNameText, itemQuantityText, itemPriceText, totalItemQuantityPriceText};
+        System.out.println(Utils.putSequanceOfTextsInBoxes(customerDetails));
+        
+        System.out.println();
+        System.out.println("The customer no: " + tempCustomerNumber + ", " + "The customer name: " + currentCustomer.getName());
+
+// View Items Available
+        if (Store.noItemsInStore()) {
+            mainMenu();
+            return;
+        }
     }
 }

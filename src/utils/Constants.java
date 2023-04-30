@@ -9,10 +9,10 @@ public class Constants {
         }
         return tempTaps;
     }
-    
+    public static String SPACE_BOX_15 = "               ";
     // Operations
-    public static int operationsCount = 9;
-    public static String OperationsText = 
+    public static int OPERATIONS_COUNT = 9;
+    public static String OPERATIONS_TEXT = 
             "Operation:\n" +
             "1. Add a new Item to Store\n" +
             "2. Add a new Customer to Store\n" + 
