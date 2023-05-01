@@ -494,6 +494,8 @@ public class OnlineStoreSystem_Deyaa_120210327 {
         System.out.println("Congratulations, Operation done.");
         System.out.println(currentCustomer.getName() + ", number: " + currentCustomer.getNumber() + ", location: " + location + ", PayPalAcount; " + email);
 
+        Store.emptyCustomerShoppingCart(tempCustomerNumber);
+        
         System.out.print("Press any key to go back to Main Menu: ");
         input.next();
     }
