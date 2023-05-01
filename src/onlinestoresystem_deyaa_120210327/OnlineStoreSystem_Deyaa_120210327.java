@@ -52,6 +52,7 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 emptyCustomerShoppingCart();
                 break;
             case 8:
+                endShoppingAndGoToCheckout();
                 break;
             case 9:
                 System.exit(0);
@@ -398,10 +399,10 @@ public class OnlineStoreSystem_Deyaa_120210327 {
         int tempNewCustomerNumber = 0;
         do {
             System.out.print("Please, Enter the new customer's number: ");
-            tempCustomerNumber = input.nextInt();
+            tempNewCustomerNumber = input.nextInt();
 
-            if (!Store.customerNumberIsAvailable(tempCustomerNumber)) {
-                System.out.println("New customer's number:[" + tempCustomerNumber + "] is not available!");
+            if (!Store.customerNumberIsAvailable(tempNewCustomerNumber)) {
+                System.out.println("New customer's number:[" + tempNewCustomerNumber + "] is not available!");
                 continueCustomerChecking = true;
             }
         } while (continueCustomerChecking);
@@ -499,5 +500,6 @@ public class OnlineStoreSystem_Deyaa_120210327 {
         
         System.out.print("Press any key to go back to Main Menu: ");
         input.next();
+        mainMenu();
     }
 }
