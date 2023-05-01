@@ -83,11 +83,20 @@ public class Store {
         return customers.get(index).getName();
     }
 
+    public static boolean noCustomersInStore() {
+        return customersCount() == 0;
+    }
+
     // Add Item to Customer's Shopping Cart
     public static void addItemToCustomer(StoreItem storeItem, int itemQuantity, int customerNumber) {
         Customer customer = getCustomer(customerNumber);
         customer.addItem(storeItem.getNumber(), storeItem.getName(), storeItem.getPrice(), storeItem.getType(), itemQuantity);
         removeItem(storeItem, itemQuantity);
+    }
+
+    static void setCustomerNumberAndNameByNumber(int customerNumber, int newCustomerNumber, String newCustomerName) {
+        getCustomer(customerNumber).setName(newCustomerName);
+        getCustomer(customerNumber).setNumber(newCustomerNumber);
     }
 
     // Getters and Setters

@@ -148,10 +148,17 @@ public class OnlineStoreSystem_Deyaa_120210327 {
     }
 
     public static void addAnItemToCustomerShoppingCart() {
-        boolean stopOperation = false;
+        if (Store.noItemsInStore()) {
+            System.out.println("No Items in Store to add!");
+            mainMenu();
+            return;
+        } else if (Store.noCustomersInStore()) {
+            System.out.println("No Customers in Store to add items to!");
+            mainMenu();
+            return;
+        }
 
         System.out.println("Add Item to Customer's Shopping Cart Operation:");
-        Customer currentCustomer = null;
         boolean continueCustomerChecking = false;
         int tempCustomerNumber;
         do {
@@ -163,16 +170,12 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 if (yesForThisOperation) {
                     continueCustomerChecking = true;
                 } else {
-                    stopOperation = true;
+                    mainMenu();
+                    return;
                 }
             }
         } while (continueCustomerChecking == true);
-
-        if (stopOperation) {
-            mainMenu();
-            return;
-        }
-        currentCustomer = Store.getCustomer(tempCustomerNumber);
+        Customer currentCustomer = Store.getCustomer(tempCustomerNumber);
 
         // View Items Available
         if (Store.noItemsInStore()) {
@@ -226,7 +229,11 @@ public class OnlineStoreSystem_Deyaa_120210327 {
     }
 
     public static void removeAnItemFromCustomerShoppingCart() {
-
+        if (Store.noCustomersInStore()) {
+            System.out.println("No Customers in Store to add items to!");
+            mainMenu();
+            return;
+        }
         System.out.println("Remove Item from Customer's Shopping Cart Operation:");
         Customer currentCustomer = null;
         boolean continueCustomerChecking = false;
@@ -353,5 +360,60 @@ public class OnlineStoreSystem_Deyaa_120210327 {
             tempReturnToMainMenuTextInput = input.next().trim().toUpperCase().charAt(0);
         } while (tempReturnToMainMenuTextInput != 'm' && tempReturnToMainMenuTextInput != 'M');
         mainMenu();
+    }
+
+    public static void modifyCustomerData() {
+        if (Store.noCustomersInStore()) {
+            System.out.println("No customers in store to modify their data!");
+            mainMenu();
+            return;
+        }
+        System.out.println("Modify Customer Data operation: ");
+        System.out.print("Enter customer number: ");
+        boolean continueCustomerChecking = false;
+        int tempCustomerNumber;
+        do {
+            System.out.print("Please enter the Customer number: ");
+            tempCustomerNumber = input.nextInt();
+
+            if (!Store.customerIsExist(tempCustomerNumber)) {
+                System.out.println("The Customer no: " + tempCustomerNumber + ", not found.");
+                boolean yesForThisOperation = Utils.askYesOrNoQuestion("Do you want to try another customer", input);
+                if (yesForThisOperation) {
+                    continueCustomerChecking = true;
+                } else {
+                    mainMenu();
+                    return;
+                }
+            }
+        } while (continueCustomerChecking == true);
+        Customer currentCustomer = Store.getCustomer(tempCustomerNumber);
+        System.out.println("The customer no: " + tempCustomerNumber + ", The customer name: " + currentCustomer.getName() + ".");
+
+        // TODO: do while to check that number is not exist.
+        continueCustomerChecking = false;
+        int tempNewCustomerNumber = 0;
+        do {
+            System.out.print("Please, Enter the new customer's number: ");
+            tempCustomerNumber = input.nextInt();
+
+            if (!Store.customerNumberIsAvailable(tempCustomerNumber)) {
+                System.out.println("New customer's number:[" + tempCustomerNumber + "] is not available!");
+                continueCustomerChecking = true;
+            }
+        } while (continueCustomerChecking);
+        System.out.print("Please, Enter the new customer's Name: ");
+        String tempCustomerName = input.next();
+
+        Store.setCustomerNumberAndNameByNumber(tempCustomerNumber, tempNewCustomerNumber, tempCustomerName);
+        System.out.println("Customer modified Successfully");
+
+        boolean yesForThisOperation = Utils.askYesOrNoQuestion("Do you want to modify another customer data", input);
+        if (yesForThisOperation) {
+            modifyCustomerData();
+        } else {
+            System.out.println("Back to main menu");
+            mainMenu();
+        }
     }
 }
