@@ -427,7 +427,6 @@ public class OnlineStoreSystem_Deyaa_120210327 {
         }
 
         System.out.println("Empty Customer's shopping cart operation: ");
-        System.out.print("Enter customer number: ");
         boolean continueCustomerChecking = false;
         int tempCustomerNumber;
         do {
@@ -446,11 +445,52 @@ public class OnlineStoreSystem_Deyaa_120210327 {
             }
         } while (continueCustomerChecking == true);
         Customer currentCustomer = Store.getCustomer(tempCustomerNumber);
-        // TODO: clean customer shopping cart.
+        Store.emptyCustomerShoppingCart(tempCustomerNumber);
         System.out.println("The customer no: " + tempCustomerNumber + ", The customer name: " + currentCustomer.getName() + ".");
         System.out.println(currentCustomer.getName() + " got a new empty Shopping Cart Successfully");
 
         System.out.print("Press any key to go to main menu: ");
         input.next();
+    }
+
+    public static void endShoppingAndGoToCheckout() {
+        if (Store.hasNoCustomers()) {
+            System.out.println("There are not customers yet");
+            mainMenu();
+            return;
+        }
+
+        System.out.println("End shopping and go to checkout operation: ");
+        Customer currentCustomer = null;
+        boolean continueCustomerChecking = false;
+        int tempCustomerNumber;
+        do {
+            System.out.print("Please enter the Customer number: ");
+            tempCustomerNumber = input.nextInt();
+
+            if (!Store.customerIsExist(tempCustomerNumber)) {
+                if (Utils.askYesOrNoQuestion("The Customer is not exist, Do you want try again", input)) {
+                    continueCustomerChecking = true;
+                } else {
+                    mainMenu();
+                    return;
+                }
+            }
+        } while (continueCustomerChecking == true);
+        currentCustomer = Store.getCustomer(tempCustomerNumber);
+        System.out.println("The customer no: " + tempCustomerNumber + ", " + "Customer Name: " + currentCustomer.getName());
+        if (currentCustomer.hasNoItems()) {
+            System.out.println(currentCustomer.getName() + " has no items!");
+            mainMenu();
+            return;
+        }
+
+        System.out.println("# Checkout, make sure to write correct information to be capable to deliver items (^-^)");
+        System.out.print("Enter your PayPal email: ");
+        input.next();
+        System.out.print("Enter your location: ");
+        input.next();
+        
+        System.out.println("Operation done");
     }
 }

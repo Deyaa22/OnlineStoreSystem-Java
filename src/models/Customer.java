@@ -50,4 +50,8 @@ public class Customer {
     public boolean hasNoItems() {
         return itemsCount() == 0;
     }
+
+    public void emptyShoppingCart() {
+        shoppingCart = new ShoppingCart();
+    }
 }
