@@ -9,7 +9,7 @@ public class Item {
     protected final float price;
     protected final ItemType type;
     protected int quantity = 0;
-    
+
     public static enum ItemType {
         Book,
         Shoes,
@@ -24,10 +24,10 @@ public class Item {
         this.quantity = quantity;
     }
 
-     public void  addQuantity(int newQuantity) {
+    public void addQuantity(int newQuantity) {
         quantity += newQuantity;
     }
-     
+
     // Getters
     public int getNumber() {
         return number;
@@ -48,7 +48,7 @@ public class Item {
     public String FullDetails() {
         return String.valueOf(number) + " " + name + Utils.putTextInSquareBrackets(String.valueOf(quantity));
     }
-    
+
     // Getters and Settters  
     public int getQuantity() {
         return quantity;

@@ -18,7 +18,7 @@ public class Customer {
     public Item getItem(int itemIndex) {
         return shoppingCart.items.get(itemIndex);
     }
-    
+
     public int getNumber() {
         return number;
     }
@@ -38,10 +38,11 @@ public class Customer {
     public int itemsCount() {
         return shoppingCart.items.size();
     }
-    
-    public void addItem(int number, String name, float price, ItemType type, int quantity){
+
+    public void addItem(int number, String name, float price, ItemType type, int quantity) {
         shoppingCart.addItem(number, name, price, type, quantity);
     }
+
     public void removeItem(int index) {
         shoppingCart.removeItem(index);
     }

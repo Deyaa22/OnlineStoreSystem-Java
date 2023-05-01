@@ -15,7 +15,7 @@ public class StoreItem extends Item {
         }
     }
 
-    public String getDetailsOuterQuantity(int quantity){
+    public String getDetailsOuterQuantity(int quantity) {
         return String.valueOf(number) + " " + name + Utils.putTextInSquareBrackets(String.valueOf(quantity));
-    }       
+    }
 }

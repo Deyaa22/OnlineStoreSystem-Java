@@ -22,10 +22,10 @@ public class ShoppingCart {
         addItem(newItem);
     }
 
-    public void removeItem(int index){
+    public void removeItem(int index) {
         items.remove(index); // .remove(item);
     }
-    
+
     public void removeItem(Item item) {
         items.remove(item);
     }
