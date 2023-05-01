@@ -71,6 +71,18 @@ public class Store {
         return getCustomer(number) == null;
     }
 
+    public static boolean hasNoCustomers() {
+        return customers.size() == 0;
+    }
+
+    public static int customersCount() {
+        return customers.size();
+    }
+
+    public static String getCustomerNameByIndex(int index) {
+        return customers.get(index).getName();
+    }
+
     // Add Item to Customer's Shopping Cart
     public static void addItemToCustomer(StoreItem storeItem, int itemQuantity, int customerNumber) {
         Customer customer = getCustomer(customerNumber);

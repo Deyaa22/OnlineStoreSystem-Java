@@ -287,12 +287,18 @@ public class OnlineStoreSystem_Deyaa_120210327 {
             String removedItemDetails = Utils.putTextInSquareBrackets(currentCustomer.getItem(tempItemIndex).FullDetails());
             currentCustomer.removeItem(tempItemIndex);
             System.out.println("The item " + removedItemDetails + " is removed from shopping cart.");
-        } while (!currentCustomer.noItemsInStore());
+        } while (!currentCustomer.hasNoItems());
 
         mainMenu();
     }
 
     public static void viewTheItemsInCustomerShoppingCart() {
+        if (Store.hasNoCustomers()) {
+            System.out.println("There are not customers yet");
+            mainMenu();
+            return;
+        }
+
         System.out.println("View items in Customer's Shopping Cart Operation:");
         Customer currentCustomer = null;
         boolean continueCustomerChecking = false;
@@ -302,8 +308,7 @@ public class OnlineStoreSystem_Deyaa_120210327 {
             tempCustomerNumber = input.nextInt();
 
             if (!Store.customerIsExist(tempCustomerNumber)) {
-                boolean yesForThisOperation = Utils.askYesOrNoQuestion("The Customer is not exist, Do you want try again", input);
-                if (yesForThisOperation) {
+                if (Utils.askYesOrNoQuestion("The Customer is not exist, Do you want try again", input)) {
                     continueCustomerChecking = true;
                 } else {
                     mainMenu();
@@ -311,28 +316,42 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 }
             }
         } while (continueCustomerChecking == true);
-
         currentCustomer = Store.getCustomer(tempCustomerNumber);
-        String itemNumberText = String.valueOf(currentCustomer.getItem(1).getNumber());
-        String itemNameText = currentCustomer.getItem(1).getName();
-        String itemQuantityText = String.valueOf(currentCustomer.getItem(1).getQuantity());
-        String itemPriceText = String.valueOf(currentCustomer.getItem(1).getPrice());
-        float totalItemQuantityPrice = currentCustomer.getItem(1).getPrice() * currentCustomer.getItem(1).getQuantity();
-        String totalItemQuantityPriceText = String.valueOf(totalItemQuantityPrice);
-        
-        String[] customerDetailsTopics = {"Item No.", "Item name", "Quantity", "Unit price", "Total price"};
-        System.out.println(Utils.putSequanceOfTextsInBoxes(customerDetailsTopics));
-        
-        String[] customerDetails = {itemNumberText, itemNameText, itemQuantityText, itemPriceText, totalItemQuantityPriceText};
-        System.out.println(Utils.putSequanceOfTextsInBoxes(customerDetails));
-        
-        System.out.println();
-        System.out.println("The customer no: " + tempCustomerNumber + ", " + "The customer name: " + currentCustomer.getName());
-
-// View Items Available
-        if (Store.noItemsInStore()) {
+        System.out.println("The customer no: " + tempCustomerNumber + ", " + "Customer Name: " + currentCustomer.getName());
+        if (currentCustomer.hasNoItems()) {
+            System.out.println(currentCustomer.getName() + " has no items!");
             mainMenu();
             return;
         }
+
+        System.out.println("Items in shopping cart");
+        System.out.println(Utils.lineOfSymbole('_'));
+        float totalPrice = 0;
+        for (int i = 0; i < currentCustomer.itemsCount(); i++) {
+            String itemNumberText = String.valueOf(currentCustomer.getItem(i).getNumber());
+            String itemNameText = currentCustomer.getItem(i).getName();
+            String itemQuantityText = String.valueOf(currentCustomer.getItem(i).getQuantity());
+            String itemPriceText = String.valueOf(currentCustomer.getItem(i).getPrice());
+            float totalItemQuantityPriceOfItem = currentCustomer.getItem(i).getPrice() * currentCustomer.getItem(i).getQuantity();
+            totalPrice += totalItemQuantityPriceOfItem;
+            String totalItemQuantityPriceText = String.valueOf(totalItemQuantityPriceOfItem);
+
+            String[] customerDetailsTopics = {"Item No.", "Item name", "Quantity", "Unit price", "Total price"};
+            System.out.println(Utils.putSequanceOfTextsInBoxes(customerDetailsTopics));
+
+            String[] customerDetails = {itemNumberText, itemNameText, itemQuantityText, itemPriceText, totalItemQuantityPriceText};
+            String itemLineDetails = Utils.putSequanceOfTextsInBoxes(customerDetails);
+            System.out.println(itemLineDetails);
+            System.out.println(Utils.lineOfSymbole('_'));
+        }
+        System.out.println(" # Total Price: " + totalPrice + "$");
+
+        char tempReturnToMainMenuTextInput;
+        boolean yesForThisOperation = false;
+        do {
+            System.out.print("Press (m/M) to return to main menu: ");
+            tempReturnToMainMenuTextInput = input.next().trim().toUpperCase().charAt(0);
+        } while (tempReturnToMainMenuTextInput != 'm' && tempReturnToMainMenuTextInput != 'M');
+        mainMenu();
     }
 }

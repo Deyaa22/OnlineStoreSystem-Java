@@ -46,7 +46,7 @@ public class Customer {
         shoppingCart.removeItem(index);
     }
 
-    public boolean noItemsInStore() {
+    public boolean hasNoItems() {
         return itemsCount() == 0;
     }
 }

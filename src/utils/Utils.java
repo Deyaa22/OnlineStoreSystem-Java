@@ -55,4 +55,15 @@ public class Utils {
         }
         return tempText;
     }
+    
+    public static String lineOfSymbole(char symbole){
+        String tempText = "";
+        for (int i = 0; i < (Constants.SPACE_BOX_15 .length()); i++) {
+            for (int j = 0; j < 5; j++) {
+                tempText = tempText.concat(String.valueOf(symbole));
+            }
+            tempText = tempText.concat(String.valueOf(symbole));
+        }
+        return tempText;
+    }
 }
