@@ -7,6 +7,7 @@ import models.StoreItem;
 import utils.Constants;
 import utils.Utils;
 
+//TODO: check if user enter a letter instead of a number and fix exception.
 public class OnlineStoreSystem_Deyaa_120210327 {
 
     static Scanner input = new Scanner(System.in);
