@@ -45,8 +45,10 @@ public class OnlineStoreSystem_Deyaa_120210327 {
                 viewTheItemsInCustomerShoppingCart();
                 break;
             case 6:
+                modifyCustomerData();
                 break;
             case 7:
+                emptyCustomerShoppingCart();
                 break;
             case 8:
                 break;
@@ -415,5 +417,40 @@ public class OnlineStoreSystem_Deyaa_120210327 {
             System.out.println("Back to main menu");
             mainMenu();
         }
+    }
+
+    public static void emptyCustomerShoppingCart() {
+        if (Store.noCustomersInStore()) {
+            System.out.println("No customers in store to modify their data!");
+            mainMenu();
+            return;
+        }
+
+        System.out.println("Empty Customer's shopping cart operation: ");
+        System.out.print("Enter customer number: ");
+        boolean continueCustomerChecking = false;
+        int tempCustomerNumber;
+        do {
+            System.out.print("Please enter the Customer number: ");
+            tempCustomerNumber = input.nextInt();
+
+            if (!Store.customerIsExist(tempCustomerNumber)) {
+                System.out.println("The Customer no: " + tempCustomerNumber + ", not found.");
+                boolean yesForThisOperation = Utils.askYesOrNoQuestion("Do you want to try another customer", input);
+                if (yesForThisOperation) {
+                    continueCustomerChecking = true;
+                } else {
+                    mainMenu();
+                    return;
+                }
+            }
+        } while (continueCustomerChecking == true);
+        Customer currentCustomer = Store.getCustomer(tempCustomerNumber);
+        // TODO: clean customer shopping cart.
+        System.out.println("The customer no: " + tempCustomerNumber + ", The customer name: " + currentCustomer.getName() + ".");
+        System.out.println(currentCustomer.getName() + " got a new empty Shopping Cart Successfully");
+
+        System.out.print("Press any key to go to main menu: ");
+        input.next();
     }
 }
