@@ -100,9 +100,9 @@ public class Store {
     }
 
     static void emptyCustomerShoppingCart(int customerNuber) {
-        getCustomer(customerNuber).emptyShoppingCart() ;
+        getCustomer(customerNuber).emptyShoppingCart();
     }
-    
+
     // Getters and Setters
     public static StoreItem getItem(int itemIndex) {
         return storeItems.get(itemIndex);
@@ -126,5 +126,5 @@ public class Store {
             }
         }
         return null;
-    }  
+    }
 }

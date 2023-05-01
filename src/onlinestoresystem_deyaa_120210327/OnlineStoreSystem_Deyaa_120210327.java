@@ -487,10 +487,14 @@ public class OnlineStoreSystem_Deyaa_120210327 {
 
         System.out.println("# Checkout, make sure to write correct information to be capable to deliver items (^-^)");
         System.out.print("Enter your PayPal email: ");
-        input.next();
+        String email = input.next();
         System.out.print("Enter your location: ");
+        String location = input.next();
+
+        System.out.println("Congratulations, Operation done.");
+        System.out.println(currentCustomer.getName() + ", number: " + currentCustomer.getNumber() + ", location: " + location + ", PayPalAcount; " + email);
+
+        System.out.print("Press any key to go back to Main Menu: ");
         input.next();
-        
-        System.out.println("Operation done");
     }
 }
